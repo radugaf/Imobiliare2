@@ -2,47 +2,47 @@ import React from "react";
 
 const FirstHomeAdvertisment = () => {
   return (
-    <section class="info-area info-bg padding-top-50px padding-bottom-50px text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="icon-box">
-              <div class="info-icon">
-                <i class="la la-bullhorn"></i>
+    <section className="info-area info-bg padding-top-50px padding-bottom-50px text-center">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-4">
+            <div className="icon-box">
+              <div className="info-icon">
+                <i className="la la-bullhorn"></i>
               </div>
-              <div class="info-content">
-                <h4 class="info__title">You'll never roam alone</h4>
-                <p class="info__desc">
+              <div className="info-content">
+                <h4 className="info__title">You'll never roam alone</h4>
+                <p className="info__desc">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor
                 </p>
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="icon-box margin-top-50px">
-              <div class="info-icon">
-                <i class="la la-globe"></i>
+          <div className="col-lg-4">
+            <div className="icon-box margin-top-50px">
+              <div className="info-icon">
+                <i className="la la-globe"></i>
               </div>
-              <div class="info-content">
-                <h4 class="info__title">
+              <div className="info-content">
+                <h4 className="info__title">
                   A world of choice – anytime, anywhere
                 </h4>
-                <p class="info__desc">
+                <p className="info__desc">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor
                 </p>
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="icon-box">
-              <div class="info-icon">
-                <i class="la la-thumbs-up"></i>
+          <div className="col-lg-4">
+            <div className="icon-box">
+              <div className="info-icon">
+                <i className="la la-thumbs-up"></i>
               </div>
-              <div class="info-content">
-                <h4 class="info__title">Peace of mind, wherever you wander</h4>
-                <p class="info__desc">
+              <div className="info-content">
+                <h4 className="info__title">Peace of mind, wherever you wander</h4>
+                <p className="info__desc">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor
                 </p>

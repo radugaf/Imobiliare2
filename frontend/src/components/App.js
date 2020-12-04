@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import Home from "./home/Home";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Login from './auth/Login'
+import Signup from './auth/Signup'
 
 import store from '../store';
 
@@ -28,6 +30,9 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <Route path="/" exact component={Home} />
+            {/* AUTH */}
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={Signup} />
             {/* <Route path="/listings" exact component={Listings} /> */}
           </Switch>
           <Footer />

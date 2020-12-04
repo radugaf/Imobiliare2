@@ -1,6 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import Loader from "react-loader-spinner";
+import PropTypes from "prop-types";
 
-const SearchArea = () => {
+import { Button, Collapse, Form } from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
+
+const SearchArea = (props) => {
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    sale_type: "For Sale",
+    price: "$0+",
+    bedrooms: "0+",
+    home_type: "House",
+    bathrooms: "0+",
+    sqft: "1000+",
+    days_listed: "1 or less",
+    has_photos: "1+",
+    open_house: "false",
+    keywords: "",
+  });
+
+  const {
+    sale_type,
+    price,
+    bedrooms,
+    home_type,
+    bathrooms,
+    sqft,
+    days_listed,
+    has_photos,
+    open_house,
+    keywords,
+  } = formData;
+
+  const [loading, setLoading] = useState(false);
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    setLoading(true);
+    axios
+      .post(
+        "http://localhost:8000/api/listings/search",
+        {
+          sale_type,
+          price,
+          bedrooms,
+          home_type,
+          bathrooms,
+          sqft,
+          days_listed,
+          has_photos,
+          open_house,
+          keywords,
+        },
+        config
+      )
+      .then((res) => {
+        setLoading(false);
+        props.setListings(res.data);
+        window.scrollTo(0, 0);
+      })
+      .catch((err) => {
+        setLoading(false);
+        window.scrollTo(0, 0);
+      });
+  };
+
   return (
     <section className="hero-wrapper hero-wrapper4">
       <div className="hero-box hero-bg-4">
@@ -37,101 +113,141 @@ const SearchArea = () => {
             <div className="col-lg-5">
               <div className="search-fields-container search-fields-container-shape">
                 <div className="search-fields-container-inner">
-                  <h3 className="title pb-3">Let's Find Your Ideal Home</h3>
-                  <div className="section-block"></div>
-                  <div className="contact-form-action pt-3">
-                    <form action="#" className="row">
-                      <div className="col-lg-12">
-                        <div className="input-box">
-                          <label className="label-text">Pick-up Location</label>
-                          <div className="form-group">
-                            <span className="la la-map-marker form-icon"></span>
-                            <input
-                              className="form-control"
-                              type="text"
-                              placeholder="City, airport, station or address"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div className="advanced-wrap">
-                    <a
-                      className="btn collapse-btn theme-btn-hover-gray font-size-15"
-                      data-toggle="collapse"
-                      href="#collapseTwo"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                    >
-                      Advanced options <i className="la la-angle-down ml-1"></i>
-                    </a>
-                    <div className="pt-3 collapse" id="collapseTwo">
-                      <div className="row">
-                        <div className="col-lg-6 pr-0">
-                          <div className="input-box">
-                            <label className="label-text">Car type</label>
-                            <div className="form-group">
-                              <div className="select-contain select-contain-shadow w-auto">
-                                <select className="select-contain-select">
-                                  <option value="1">No preference</option>
-                                  <option value="2">Economy</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-lg-6">
-                          <div className="input-box">
-                            <label className="label-text">Rental car company</label>
-                            <div className="form-group">
-                              <div className="select-contain select-contain-shadow w-auto">
-                                <select className="select-contain-select">
-                                  <option value="">No preference</option>
-                                  <option value="AC">ACE Rent A Car</option>
-                                  <option value="AD">
-                                    Advantage Rent-A-Car
-                                  </option>
-                                  <option value="AL">Alamo Rent A Car</option>
-                                  <option value="ZI">Avis</option>
-
-                                  <option value="ZL">
-                                    National Car Rental
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
+                  <Form onSubmit={(e) => onSubmit(e)}>
+                    <h3 className="title pb-3">Let's Find Your Ideal Home</h3>
+                    <div className="section-block"></div>
+                    <div className="contact-form-action pt-3">
+                      <Form.Group className="row">
                         <div className="col-lg-12">
                           <div className="input-box">
-                            <label className="label-text">Discount code</label>
+                            <Form.Label className="label-text">
+                              Keywards
+                            </Form.Label>
                             <div className="form-group">
-                              <div className="select-contain select-contain-shadow w-auto">
-                                <select className="select-contain-select">
-                                  <option value="0">I don't have a code</option>
-                                  <option value="1">
-                                    Corporate or contracted
+                              <span className="la la-map-marker form-icon"></span>
+                              <Form.Control
+                                onChange={(e) => onChange(e)}
+                                value={keywords}
+                                className="form-control"
+                                type="text"
+                                placeholder="Try by keywords"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    <Form.Group className="advanced-wrap">
+                      <a
+                        onClick={() => setOpen(!open)}
+                        className="btn collapse-btn theme-btn-hover-gray font-size-15"
+                        aria-expanded={open}
+                        aria-controls="collapseTwo"
+                      >
+                        Advanced search
+                        <i className="la la-angle-down ml-1"></i>
+                      </a>
+                      <Collapse in={open} className="pt-3">
+                        <div className="row" id="collapseTwo">
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Home Type
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  onChange={(e) => onChange(e)}
+                                  value={home_type}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option value="1" selected>
+                                    House
                                   </option>
-                                  <option value="2">
-                                    Special or advertised
-                                  </option>
-                                </select>
+                                  <option value="2">Condo</option>
+                                  <option value="3">Townhouse</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Days Listed
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  onChange={(e) => onChange(e)}
+                                  value={days_listed}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option>1 or less</option>
+                                  <option>2 or less</option>
+                                  <option>5 or less</option>
+                                  <option>5 or less</option>
+                                  <option>5 or less</option>
+                                  <option>10 or less</option>
+                                  <option>20 or less</option>
+                                  <option selected>Any</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Bedrooms
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  onChange={(e) => onChange(e)}
+                                  value={bedrooms}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option>0+</option>
+                                  <option>1+</option>
+                                  <option>2+</option>
+                                  <option>3+</option>
+                                  <option>4+</option>
+                                  <option>5+</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Has Photos
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  onChange={(e) => onChange(e)}
+                                  value={has_photos}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option selected>1+</option>
+                                  <option>3+</option>
+                                  <option>5+</option>
+                                  <option>10+</option>
+                                  <option>15+</option>
+                                </Form.Control>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </Collapse>
+                    </Form.Group>
+
+                    <div className="btn-box pt-3">
+                      <a href="car-search-result.html" className="theme-btn">
+                        Search Now
+                      </a>
                     </div>
-                  </div>
-                  <div className="btn-box pt-3">
-                    <a href="car-search-result.html" className="theme-btn">
-                      Search Now
-                    </a>
-                  </div>
+                  </Form>
                 </div>
               </div>
             </div>
@@ -149,6 +265,10 @@ const SearchArea = () => {
       </div>
     </section>
   );
+};
+
+SearchArea.propTypes = {
+  setListings: PropTypes.func.isRequired
 };
 
 export default SearchArea;

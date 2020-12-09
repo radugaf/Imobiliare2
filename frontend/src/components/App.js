@@ -7,8 +7,10 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Login from './auth/Login'
 import Signup from './auth/Signup'
+import ListingDetail from './detail/ListingDetail'
 
 import store from '../store';
+import PrivateRoute from './detail/privateRoute'
 
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/bootstrap-select.min.css";
@@ -33,6 +35,7 @@ class App extends React.Component {
             {/* AUTH */}
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
+            <PrivateRoute exact path='/listings/:id' component={ListingDetail} />
             {/* <Route path="/listings" exact component={Listings} /> */}
           </Switch>
           <Footer />

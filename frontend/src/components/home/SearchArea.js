@@ -3,8 +3,8 @@ import axios from "axios";
 import Loader from "react-loader-spinner";
 import PropTypes from "prop-types";
 
-import { Button, Collapse, Form } from "react-bootstrap";
-import Accordion from "react-bootstrap/Accordion";
+import { Collapse, Form } from "react-bootstrap";
+
 
 const SearchArea = (props) => {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ const SearchArea = (props) => {
     home_type: "House",
     bathrooms: "0+",
     sqft: "1000+",
-    days_listed: "1 or less",
+    days_listed: "Any",
     has_photos: "1+",
     open_house: "false",
     keywords: "",
@@ -44,8 +44,9 @@ const SearchArea = (props) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
+
     };
 
     setLoading(true);
@@ -130,8 +131,28 @@ const SearchArea = (props) => {
                                 value={keywords}
                                 className="form-control"
                                 type="text"
+                                name="keywords"
                                 placeholder="Try by keywords"
                               />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="input-box">
+                            <Form.Label className="label-text">
+                              Home Type
+                            </Form.Label>
+                            <div className="form-group select-contain w-auto">
+                              <Form.Control
+                                name="sale_type"
+                                onChange={(e) => onChange(e)}
+                                value={sale_type}
+                                as="select"
+                                className="select-contain-select"
+                              >
+                                <option selected>For Sale</option>
+                                <option>For Rent</option>
+                              </Form.Control>
                             </div>
                           </div>
                         </div>
@@ -160,13 +181,81 @@ const SearchArea = (props) => {
                                   onChange={(e) => onChange(e)}
                                   value={home_type}
                                   as="select"
+                                  name="home_type"
                                   className="select-contain-select"
                                 >
-                                  <option value="1" selected>
-                                    House
-                                  </option>
-                                  <option value="2">Condo</option>
-                                  <option value="3">Townhouse</option>
+                                  <option selected>House</option>
+                                  <option>Condo</option>
+                                  <option>Townhouse</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Sqft
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  name="sqft"
+                                  onChange={(e) => onChange(e)}
+                                  value={sqft}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option>1000+</option>
+                                  <option>1200+</option>
+                                  <option>1500+</option>
+                                  <option>2000+</option>
+                                  <option selected>Any</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Baths
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  name="bathrooms"
+                                  onChange={(e) => onChange(e)}
+                                  value={bathrooms}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option selected>0+</option>
+                                  <option>1+</option>
+                                  <option>2+</option>
+                                  <option>3+</option>
+                                </Form.Control>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="input-box">
+                              <Form.Label className="label-text">
+                                Price
+                              </Form.Label>
+                              <div className="form-group select-contain w-auto">
+                                <Form.Control
+                                  name="price"
+                                  onChange={(e) => onChange(e)}
+                                  value={price}
+                                  as="select"
+                                  className="select-contain-select"
+                                >
+                                  <option selected>Any</option>
+                                  <option>$0+</option>
+                                  <option>$200,000+</option>
+                                  <option>$400,000+</option>
+                                  <option>$600,000+</option>
+                                  <option>$800,000+</option>
+                                  <option>$1,000,000+</option>
+                                  <option>$1,200,000+</option>
+                                  <option>$1,400,000+</option>
                                 </Form.Control>
                               </div>
                             </div>
@@ -181,6 +270,7 @@ const SearchArea = (props) => {
                                   onChange={(e) => onChange(e)}
                                   value={days_listed}
                                   as="select"
+                                  name="days_listed"
                                   className="select-contain-select"
                                 >
                                   <option>1 or less</option>
@@ -190,7 +280,8 @@ const SearchArea = (props) => {
                                   <option>5 or less</option>
                                   <option>10 or less</option>
                                   <option>20 or less</option>
-                                  <option selected>Any</option>
+                                  <option>Any</option>
+                                  
                                 </Form.Control>
                               </div>
                             </div>
@@ -205,6 +296,7 @@ const SearchArea = (props) => {
                                   onChange={(e) => onChange(e)}
                                   value={bedrooms}
                                   as="select"
+                                  name="bedrooms"
                                   className="select-contain-select"
                                 >
                                   <option>0+</option>
@@ -227,6 +319,7 @@ const SearchArea = (props) => {
                                   onChange={(e) => onChange(e)}
                                   value={has_photos}
                                   as="select"
+                                  name="has_photos"
                                   className="select-contain-select"
                                 >
                                   <option selected>1+</option>
@@ -238,14 +331,41 @@ const SearchArea = (props) => {
                               </div>
                             </div>
                           </div>
+                          <div class="col-lg-12">
+                            <div class="input-box">
+                              <div class="form-group">
+                                <div class="custom-checkbox">
+                                  <input
+                                    name="open_house"
+                                    type="checkbox"
+                                    onChange={(e) => onChange(e)}
+                                    value={open_house}
+                                    id="agreeChb"
+                                  />
+                                  <label for="agreeChb">
+                                    Open House
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </Collapse>
                     </Form.Group>
 
                     <div className="btn-box pt-3">
-                      <a href="car-search-result.html" className="theme-btn">
-                        Search Now
-                      </a>
+                      {loading ? (
+                        <div className="listingform__loader">
+                          <Loader
+                            type="Oval"
+                            color="#424242"
+                            height={50}
+                            width={50}
+                          />
+                        </div>
+                      ) : (
+                        <button className="theme-btn">Search Now</button>
+                      )}
                     </div>
                   </Form>
                 </div>
@@ -268,7 +388,7 @@ const SearchArea = (props) => {
 };
 
 SearchArea.propTypes = {
-  setListings: PropTypes.func.isRequired
+  setListings: PropTypes.func.isRequired,
 };
 
 export default SearchArea;

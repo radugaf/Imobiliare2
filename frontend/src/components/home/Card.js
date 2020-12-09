@@ -11,7 +11,7 @@ const Card = (props) => {
     <div className="card-item mb-0">
       <div className="card-img">
         <a href="hotel-single.html" className="d-block">
-          <img src={props.photo_main} alt="hotel-img" />
+          <img src={props.photo_main} alt="House" />
         </a>
         <span className="badge">Popular</span>
         <div
